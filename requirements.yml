@@ -1,0 +1,8 @@
+- name: nover.ohmyzsh
+  src: nover.ohmyzsh
+- name: Tahvok.vim
+  src: Tahvok.vim
+  #- name: kbrebanov.tmux
+  # src: kbrebanov.tmux
+- name: nephelaiio.tmux
+  src: nephelaiio.tmux

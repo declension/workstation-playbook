@@ -1,0 +1,36 @@
+---
+- name: run ansible galaxy
+  hosts: localhost
+  become: true
+  tasks:
+    - local_action: command ansible-galaxy install -r requirements.yml
+
+- name: Install Dev Tools 
+  hosts: localhost
+  become: yes
+  #become_user: nick
+  vars:
+    ohmyzsh_theme: robbyrussell
+    ohmyzsh_users: [ nick ]
+  roles:
+    - { role: nover.ohmyzsh, ohmyzsh_users: [ nick ] }
+    - Tahvok.vim
+    - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: nick, tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
+
+- name: common programs
+  hosts: localhost
+  become: yes
+  tasks:
+    - action:  >
+        {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes 
+      with_items:
+        - docker.io
+        - htop
+        - net-tools
+        - tree
+        - jq
+        - httpie
+        - cowsay
+        - lolcat
+        - toilet
+        - ubuntu-restricted-extras
