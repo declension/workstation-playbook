@@ -1,5 +1,5 @@
 ---
-- name: run ansible galaxy
+- name: Run Ansible Galaxy
   hosts: localhost
   become: true
   tasks:
@@ -17,7 +17,7 @@
     - Tahvok.vim
     - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: nick, tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
-- name: common programs
+- name: Install useful packages
   hosts: localhost
   become: yes
   tasks:
@@ -34,3 +34,14 @@
         - lolcat
         - toilet
         - ubuntu-restricted-extras
+        - powerline
+
+- name: Install latest Haskell Stack
+  hosts: localhost
+  tasks:
+    - shell: which stack || curl -sSL https://get.haskellstack.org/ | sh
+
+- name: Install GHC etc
+  hosts: localhost
+  tasks:
+    - command: stack setup
