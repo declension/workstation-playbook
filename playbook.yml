@@ -7,7 +7,6 @@
 
 - name: Install Dev Tools 
   hosts: localhost
-  become: yes
   #become_user: nick
   vars:
     ohmyzsh_theme: robbyrussell
@@ -45,3 +44,4 @@
   hosts: localhost
   tasks:
     - command: stack setup
+
