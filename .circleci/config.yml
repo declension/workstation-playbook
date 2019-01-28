@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          - name: Add PPAs
+            command: apt install software-properties-common && apt-add-repository ppa:ansible/ansible && apt update
+      - run:
           name: Install Ansible
           command: apt-get install -y ansible
       - run:
