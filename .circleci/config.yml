@@ -16,4 +16,4 @@ jobs:
           command: apt-get install -y ansible
       - run:
           name: Run playbook
-          command: ansible-playbook playbook.yml -c localhost -K
+          command: ansible-playbook playbook.yml -c localhost
