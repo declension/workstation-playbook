@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Add a user
+          command: useradd foobar
+      - run:
           name: Add PPA tools
           command: apt update && apt install -y software-properties-common
       - run:
@@ -19,4 +22,4 @@ jobs:
           command: ansible-galaxy install -r requirements.yml
       - run:
           name: Run playbook
-          command: ansible-playbook playbook.yml -c localhost
+          command: ansible-playbook -e user=foobar playbook.yml -c localhost
