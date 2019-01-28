@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: ubuntu:18.10
+    steps:
+      - checkout
+      - run:
+          name: Install Ansible
+          command: apt-get install -y ansible
+      - run:
+          name: Run playbook
+          command: ansible-playbook playbook.yml -c localhost -K
