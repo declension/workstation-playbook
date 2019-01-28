@@ -39,13 +39,6 @@
   hosts: localhost
   roles:
     - role: gantsign.bat
-    - role: gantsign.antigen
-      users:
-        - username: "{{ user }}"
-          antigen_bundles:
-            - name: bat
-              url: gantsign/zsh-plugins
-              location: bat
 
 - name: Install latest Haskell Stack
   hosts: localhost
