@@ -48,5 +48,5 @@
 - name: Reminders
   hosts: localhost
   tasks:
-    - command: echo "Get Bat: https://github.com/sharkdp/bat/releases/latest"
-    - command: echo "Get Alacritty: https://github.com/jwilm/alacritty/releases/latest" 
+    - command: echo "Get Bat - https://github.com/sharkdp/bat/releases/latest"
+    - command: echo "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
