@@ -6,3 +6,5 @@
   # src: kbrebanov.tmux
 - name: nephelaiio.tmux
   src: nephelaiio.tmux
+- name: gantsign.bat
+  src: gantsign.bat

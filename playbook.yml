@@ -35,6 +35,18 @@
         - ubuntu-restricted-extras
         - powerline
 
+- name: Install Bat
+  hosts: localhost
+  roles:
+    - role: gantsign.bat
+    - role: gantsign.antigen
+      users:
+        - username: nick
+          antigen_bundles:
+            - name: bat
+              url: gantsign/zsh-plugins
+              location: bat
+
 - name: Install latest Haskell Stack
   hosts: localhost
   tasks:
@@ -48,5 +60,4 @@
 - name: Reminders
   hosts: localhost
   tasks:
-    - command: echo "Get Bat - https://github.com/sharkdp/bat/releases/latest"
     - command: echo "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
