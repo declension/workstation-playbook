@@ -6,8 +6,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Add PPA tools
+          command: apt update && apt install -y software-properties-common
+      - run:
           name: Add Ansible PPA
-          command: echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu cosmic main" >> /etc/apt/sources.list && apt update
+          command: apt-add-repository ppa:ansible/ansible && apt update
       - run:
           name: Install Ansible
           command: apt-get install -y ansible
