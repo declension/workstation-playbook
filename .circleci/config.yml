@@ -12,5 +12,8 @@ jobs:
           name: Install Ansible
           command: apt-get install -y ansible
       - run:
+          name: Install Ansible Galaxy roles
+          command: ansible-galaxy install -r requirements.yml
+      - run:
           name: Run playbook
           command: ansible-playbook playbook.yml -c localhost
