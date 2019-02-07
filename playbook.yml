@@ -16,6 +16,14 @@
     - Tahvok.vim
     - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
+- name: Default to Zsh
+  hosts: localhost
+  tasks:
+    - user:
+        name: "{{user}}"
+        generate_ssh_key: yes
+        shell: /usr/bin/zsh
+
 - name: Install useful packages
   hosts: localhost
   become: yes
@@ -34,6 +42,15 @@
         - toilet
         - ubuntu-restricted-extras
         - powerline
+        - gnome-tweaks
+        - fonts-powerline
+
+# TODO: wait for Ansible 2.8 and snap command
+- name: Install Slack via Snap
+  hosts: localhost
+  become: yes
+  tasks:
+    - command: snap install --classic slack
 
 - name: Install Bat
   hosts: localhost
@@ -49,6 +66,11 @@
   hosts: localhost
   tasks:
     - command: stack setup
+
+- name: Sort out window dragging
+  hosts: localhost
+  tasks:
+    - command: gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Alt>'
 
 - name: Reminders
   hosts: localhost

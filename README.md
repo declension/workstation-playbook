@@ -9,9 +9,10 @@ Workstation Setup
 Setup
 -----
 
-### Install Ansible
+### Install Latest Ansible
 
 ```bash
+sudo apt-add-repository -y ppa:ansible/ansible
 sudo apt install ansible
 ```
 
@@ -27,5 +28,5 @@ sudo ansible-galaxy install -r requirements.yml`
 Then: 
 
 ```bash
-ansible-playbook playbook.yml -c localhost -K
+ansible-playbook -e "user=$USER" playbook.yml -c localhost -K
 ```
