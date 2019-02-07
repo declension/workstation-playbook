@@ -7,7 +7,7 @@
 
 - name: Install Dev Tools 
   hosts: localhost
-  #become_user: {{ user }}
+  become: yes
   vars:
     ohmyzsh_theme: robbyrussell
     ohmyzsh_users: [ "{{ user }}" ]
