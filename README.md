@@ -12,7 +12,7 @@ Setup
 ### Install Ansible
 
 ```bash
-sudo apt intsall ansible
+sudo apt install ansible
 ```
 
 ### Run playbook
