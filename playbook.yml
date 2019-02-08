@@ -5,7 +5,7 @@
   tasks:
     - local_action: command ansible-galaxy install -r requirements.yml
 
-- name: Install Dev Tools 
+- name: Install Dev Tools
   hosts: localhost
   become: yes
   vars:
@@ -18,18 +18,21 @@
 
 - name: Default to Zsh
   hosts: localhost
+  become: yes
   tasks:
     - user:
-        name: "{{user}}"
+        name: "{{ user|quote }}"
         generate_ssh_key: yes
         shell: /usr/bin/zsh
+        append: yes
+        groups: adm, docker
 
 - name: Install useful packages
   hosts: localhost
   become: yes
   tasks:
     - action:  >
-        {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes 
+        {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
       with_items:
         - docker.io
         - htop
@@ -62,10 +65,34 @@
   tasks:
     - shell: which stack || curl -sSL https://get.haskellstack.org/ | sh
 
+- name: Install NodeJS
+  hosts: localhost
+  become: yes
+  tasks:
+     - get_url:
+         url: https://deb.nodesource.com/setup_10.x
+         dest: /tmp/set-up-node-10.sh
+         force: yes
+         mode: ug+rx
+     - script: /tmp/set-up-node-10.sh
+     - apt:
+         name: nodejs
+
 - name: Install GHC etc
   hosts: localhost
   tasks:
     - command: stack setup
+
+- name: Install Rust
+  hosts: localhost
+  tasks:
+    - get_url:
+        url: https://sh.rustup.rs
+        dest: /tmp/rustup.sh
+        force: yes
+        mode: ug+x
+    - script: /tmp/rustup.sh -y
+
 
 - name: Sort out window dragging
   hosts: localhost
