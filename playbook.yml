@@ -16,7 +16,7 @@
     - Tahvok.vim
     - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
-- name: Default to Zsh
+- name: Configure user for Zsh and Docker
   hosts: localhost
   become: yes
   tasks:
@@ -26,6 +26,49 @@
         shell: /usr/bin/zsh
         append: yes
         groups: adm, docker
+
+- name: Configure Zsh
+  hosts: localhost
+  tasks:
+    - template:
+        src: templates/zshrc.in
+        dest: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
+        backup: yes
+    - file:
+        src: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
+        dest: "{{ ansible_env.HOME + '/.zshrc' }}"
+        state: link
+        force: true
+    - file:
+        path: "{{ ansible_env.HOME + '/.conf/' }}"
+        state: absent
+
+- name: Configure Tmux
+  hosts: localhost
+  tasks:
+    - template:
+        src: templates/tmux.conf
+        dest: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
+    - file:
+        src: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
+        dest: "{{ ansible_env.HOME + '/.tmux.conf' }}"
+        state: link
+
+- name: Add Yarn repo
+  hosts: localhost
+  become: true
+  tasks:
+    - apt_key:
+        url: https://dl.yarnpkg.com/debian/pubkey.gpg
+        state: present
+    - apt_repository:
+        repo: deb https://dl.yarnpkg.com/debian/ stable main
+        state: present
+        filename: yarn
+    - apt:
+        update_cache: true
+        name: yarn
+
 
 - name: Install useful packages
   hosts: localhost
