@@ -69,6 +69,19 @@
         update_cache: true
         name: yarn
 
+- name: Add Oracle Java repo
+  hosts: localhost
+  become: true
+  tasks:
+   - apt_repository:
+       repo: "ppa:linuxuprising/java"
+       state: present
+       filename: linuxuprising
+   - shell: echo "oracle-java11-installer shared/accepted-oracle-license-v1-2 select true" | debconf-set-selections
+   - apt:
+       update_cache: true
+       name: oracle-java11-installer 
+
 
 - name: Install useful packages
   hosts: localhost
@@ -77,6 +90,9 @@
     - action:  >
         {{ ansible_pkg_mgr }} name={{ item }} state=present update_cache=yes
       with_items:
+        - openjdk-11-jdk
+        - python3-pip
+        - python3-venv
         - docker.io
         - htop
         - net-tools
@@ -102,6 +118,12 @@
   hosts: localhost
   roles:
     - role: gantsign.bat
+
+- name: Set up Python tooling
+  hosts: localhost
+  tasks:
+    - command: python3 -m pip install --user --upgrade pip
+    - command: pip install --user poetry
 
 - name: Install latest Haskell Stack
   hosts: localhost
