@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Add a user
-          command: useradd foobar
+          command: useradd foobar && mkdir /home/foobar/.config
       - run:
           name: Add PPA tools
           command: apt update && apt install -y software-properties-common
