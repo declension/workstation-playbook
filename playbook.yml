@@ -16,17 +16,6 @@
     - Tahvok.vim
     - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
-- name: Configure user for Zsh and Docker
-  hosts: localhost
-  become: yes
-  tasks:
-    - user:
-        name: "{{ user|quote }}"
-        generate_ssh_key: yes
-        shell: /usr/bin/zsh
-        append: yes
-        groups: adm, docker
-
 - name: Configure Zsh
   hosts: localhost
   tasks:
@@ -94,6 +83,7 @@
         - python3-pip
         - python3-venv
         - docker.io
+        - pandoc
         - htop
         - net-tools
         - tree
@@ -157,6 +147,17 @@
         force: yes
         mode: ug+x
     - script: /tmp/rustup.sh -y
+
+- name: Configure user for Zsh and Docker
+  hosts: localhost
+  become: yes
+  tasks:
+    - user:
+        name: "{{ user|quote }}"
+        generate_ssh_key: yes
+        shell: /usr/bin/zsh
+        append: yes
+        groups: adm, docker
 
 
 - name: Sort out window dragging
