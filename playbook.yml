@@ -169,3 +169,15 @@
   hosts: localhost
   tasks:
     - command: echo "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
+
+- name: Increase file watchers
+  hosts: localhost
+  become: true
+  tasks:
+   - command: echo "fs.inotify.max_user_watches=524288" >>> /etc/sysctl.conf
+
+- name: Sort arrow keys
+  hosts: localhost
+  tasks:
+   - command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "[]"
+   - command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "[]"
