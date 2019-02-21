@@ -5,6 +5,13 @@
   tasks:
     - local_action: command ansible-galaxy install -r requirements.yml
 
+- name: User config
+  hosts: localhost
+  tasks:
+    - file:
+        path: "{{ ansible_env.HOME + '/.config' }}"
+        state: directory
+
 - name: Install Dev Tools
   hosts: localhost
   become: yes
@@ -159,6 +166,10 @@
         append: yes
         groups: adm, docker
 
+- name: Install AWS CLI tools
+  hosts: localhost
+  tasks:
+   - command: pip install --user awscli
 
 - name: Sort out window dragging
   hosts: localhost
