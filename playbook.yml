@@ -11,3 +11,9 @@
     - { role: nover.ohmyzsh, ohmyzsh_users: [ "{{ ohmyzsh_user }}" ] }
     - Tahvok.vim
     - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/roles/workstation/templates/tmux.conf" }
+
+- name: Install Bat
+  hosts: localhost
+  roles:
+    - role: gantsign.bat
+
