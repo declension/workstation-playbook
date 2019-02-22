@@ -1,0 +1,181 @@
+---
+- name: Run Ansible Galaxy
+  become: true
+  local_action: command ansible-galaxy install -r requirements.yml
+
+- name: User config
+  file:
+    path: "{{ ansible_env.HOME + '/.config' }}"
+    state: directory
+
+
+- name: Configure Zsh
+  template:
+    src: templates/zshrc.in
+    dest: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
+    backup: yes
+
+- name: Add ZSH config directories
+  file:
+    src: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
+    dest: "{{ ansible_env.HOME + '/.zshrc' }}"
+    state: link
+    force: true
+ 
+- name: Remove ~/.conf/ 
+  file:
+    path: "{{ ansible_env.HOME + '/.conf/' }}"
+    state: absent
+
+- name: Configure Tmux
+  template:
+    src: templates/tmux.conf
+    dest: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
+
+- name: Link global Tmux config
+  file:
+    src: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
+    dest: "{{ ansible_env.HOME + '/.tmux.conf' }}"
+    state: link
+
+- name: Add Yarn GPG key
+  become: true
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    state: present
+
+- name: Add Yarn repo
+  become: true
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    state: present
+    filename: yarn
+
+- name: Install Yarn
+  become: true
+  apt:
+    update_cache: true
+    name: yarn
+
+- name: Add Oracle Java repo
+  become: true
+  apt_repository:
+    repo: "ppa:linuxuprising/java"
+    state: present
+    filename: linuxuprising
+
+- name: Accept Oracle License
+  become: true
+  shell: echo "oracle-java11-installer shared/accepted-oracle-license-v1-2 select true" | debconf-set-selections
+
+- name: Add Oracle Java 11
+  become: true
+  apt:
+    update_cache: true
+    name: oracle-java11-installer 
+
+
+- name: Install useful packages
+  become: yes
+  apt:
+    name:
+    - openjdk-11-jdk
+    - python3-pip
+    - python3-venv
+    - docker.io
+    - pandoc
+    - htop
+    - net-tools
+    - tree
+    - jq
+    - httpie
+    - cowsay
+    - lolcat
+    - toilet
+    - ubuntu-restricted-extras
+    - powerline
+    - gnome-tweaks
+    - fonts-powerline
+    - yamllint
+
+# TODO: wait for Ansible 2.8 and snap command
+- name: Install Slack via Snap
+  become: yes
+  command: snap install --classic slack
+
+- name: Set up Python tooling
+  command: python3 -m pip install --user --upgrade pip
+
+- name: Add Python Poetry
+  command: pip install --user poetry
+
+- name: Install latest Haskell Stack
+  shell: which stack || curl -sSL https://get.haskellstack.org/ | sh
+
+- name: Download Node.JS 10 Repo script
+  become: yes
+  get_url:
+     url: https://deb.nodesource.com/setup_10.x
+     dest: /tmp/set-up-node-10.sh
+     force: yes
+     mode: ug+rx
+- name: Set up Node repo
+  become: true
+  script: /tmp/set-up-node-10.sh
+
+- name: Install Node JS
+  become: true
+  apt:
+    name: nodejs
+
+- name: Install GHC etc
+  command: stack setup
+
+- name: Download Rust install script
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup.sh
+    force: yes
+    mode: ug+x
+
+- name: Install Rust
+  script: /tmp/rustup.sh -y
+
+- name: Configure user for Zsh and Docker
+  become: yes
+  user:
+    name: "{{ user|quote }}"
+    generate_ssh_key: yes
+    shell: /usr/bin/zsh
+    append: yes
+    groups: adm, docker
+
+- name: Install AWS CLI tools
+  command: pip install --user awscli
+
+- name: Download Terraform
+  get_url:
+    url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
+    dest: /tmp/terraform.zip
+    force: yes
+
+- name: Install Terraform
+  unarchive:
+    dest: /usr/local/bin
+    src: /tmp/terraform.zip
+
+- name: Sort out window dragging
+  command: gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Alt>'
+
+- name: Reminders
+  command: echo "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
+
+- name: Increase file watchers
+  become: true
+  command: echo "fs.inotify.max_user_watches=524288" >>> /etc/sysctl.conf
+
+- name: Disable move to workspace left keys
+  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left '[]'
+
+- name: Disable move to workspace right keys
+  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right '[]'
