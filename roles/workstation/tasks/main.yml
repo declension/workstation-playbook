@@ -34,8 +34,9 @@
 - name: Link global Tmux config
   file:
     src: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
-    dest: "{{ ansible_env.HOME + '/.tmux.conf' }}"
+    dest: "{{ tmux_conf_file }}"
     state: link
+  when: tmux_conf_file is not exists
 
 - name: Add Yarn GPG key
   become: true
@@ -101,7 +102,7 @@
 - name: Install Slack via Snap
   become: yes
   command: snap install --classic slack
-  when: "{{ lookup('env','CI') }}" == ""
+  when: lookup('env','CI') == ""
 
 - name: Set up Python tooling
   command: python3 -m pip install --user --upgrade pip
