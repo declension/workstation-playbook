@@ -73,6 +73,8 @@
   apt:
     update_cache: true
     name: oracle-java11-installer
+    state: present
+  when: jdk11_dir is not exists
 
 
 - name: Install useful packages
