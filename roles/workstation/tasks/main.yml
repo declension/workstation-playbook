@@ -8,7 +8,6 @@
     path: "{{ ansible_env.HOME + '/.config' }}"
     state: directory
 
-
 - name: Configure Zsh
   template:
     src: templates/zshrc.in
@@ -102,7 +101,7 @@
 - name: Install Slack via Snap
   become: yes
   command: snap install --classic slack
-  when: {{ lookup('env','CI') }} == ""
+  when: "{{ lookup('env','CI') }}" == ""
 
 - name: Set up Python tooling
   command: python3 -m pip install --user --upgrade pip
