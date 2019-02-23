@@ -5,12 +5,11 @@
 - hosts: localhost
   become: yes
   vars:
-    ohmyzsh_theme: robbyrussell
     ohmyzsh_users: [ "{{ user }}" ]
   roles:
     - { role: nover.ohmyzsh, ohmyzsh_users: [ "{{ ohmyzsh_user }}" ] }
     - Tahvok.vim
-    - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/roles/workstation/templates/tmux.conf" }
+    - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
 - name: Install Bat
   hosts: localhost
