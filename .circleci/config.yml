@@ -9,9 +9,6 @@ jobs:
           name: Add a user
           command: useradd -d /home/foobar foobar && mkdir -p /home/foobar/.config
       - run:
-          name: Start snapd
-          command: systemctl restart snapd.service
-      - run:
           name: Add PPA tools
           command: apt update && apt install -y software-properties-common
       - run:
