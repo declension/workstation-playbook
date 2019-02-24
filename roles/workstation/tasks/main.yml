@@ -5,12 +5,18 @@
 
 - name: User config
   file:
-    path: "{{ ansible_env.HOME + '/.config' }}"
+    path: "{{ config_dir }}"
     state: directory
+
+- name: Local bin
+  file:
+    path: "{{ ansible_env.HOME + '/.local/bin' }} "
+    state: directory
+    recurse: true
 
 - name: Add ZSH config directories
   file:
-    src: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
+    src: "{{ config_dir + '/.zshrc' }}"
     dest: "{{ ansible_env.HOME + '/.zshrc' }}"
     state: link
     force: true
