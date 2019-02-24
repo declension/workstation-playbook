@@ -84,7 +84,6 @@
     - openjdk-11-jdk
     - python3-pip
     - python3-venv
-    - docker.io
     - pandoc
     - htop
     - net-tools

@@ -11,6 +11,7 @@
     - Tahvok.vim
     - { role: nephelaiio.tmux, tmux_packages: tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
     - gantsign.bat
+    - geerlingguy.docker
 
 - hosts: localhost
   roles:
