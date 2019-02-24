@@ -1,5 +1,6 @@
 Workstation Setup
 =================
+[![CircleCI](https://circleci.com/gh/declension/workstation-playbook.svg?style=svg)](https://circleci.com/gh/declension/workstation-playbook)
 
 ### Assumptions
 
