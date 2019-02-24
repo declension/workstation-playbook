@@ -6,5 +6,5 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 18.09.2-ce
+          version: 18.06.0-ce
       - run: docker build -t workstation-playbook:latest
