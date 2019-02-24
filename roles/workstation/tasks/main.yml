@@ -8,12 +8,6 @@
     path: "{{ ansible_env.HOME + '/.config' }}"
     state: directory
 
-- name: Configure Zsh
-  template:
-    src: templates/zshrc.in
-    dest: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
-    backup: yes
-
 - name: Add ZSH config directories
   file:
     src: "{{ ansible_env.HOME + '/.config/.zshrc' }}"
@@ -122,6 +116,7 @@
      dest: /tmp/set-up-node-10.sh
      force: yes
      mode: ug+rx
+
 - name: Set up Node repo
   become: true
   script: /tmp/set-up-node-10.sh

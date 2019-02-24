@@ -1,0 +1,30 @@
+---
+- name: Configure Zsh
+  template:
+    src: templates/zshrc.in
+    dest: "{{ config_dir + '/.zshrc' }}"
+    backup: yes
+
+- name: Symlink ZSH config
+  file:
+    src: "{{ config_dir + '/.zshrc' }}"
+    dest: "{{ ansible_env.HOME + '/.zshrc' }}"
+    state: link
+    force: true
+
+- name: Remove ~/.conf/
+  file:
+    path: "{{ ansible_env.HOME + '/.conf/' }}"
+    state: absent
+
+- name: Configure Tmux
+  template:
+    src: templates/tmux.conf
+    dest: "{{ config_dir + '/tmux.conf' }}"
+
+- name: Link global Tmux config
+  file:
+    src: "{{ config_dir + '/tmux.conf' }}"
+    dest: "{{ tmux_conf_file }}"
+    state: link
+  when: tmux_conf_file is not exists

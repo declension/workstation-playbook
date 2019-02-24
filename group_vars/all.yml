@@ -1,2 +1,4 @@
 user: nick
 ohmyzsh_theme: robbyrussell
+tmux_conf_file: "{{ ansible_env.HOME + '/.tmux.conf' }}"
+config_dir: "{{ ansible_env.HOME + '/' + '.config' }}"
