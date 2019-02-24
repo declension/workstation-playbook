@@ -2,24 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ubuntu:18.10
+      - image: docker:stable-git
     steps:
       - checkout
-      - run:
-          name: Add a user
-          command: useradd -d /home/foobar foobar && mkdir -p /home/foobar/.config
-      - run:
-          name: Add PPA tools
-          command: apt update && apt install -y software-properties-common
-      - run:
-          name: Add Ansible PPA
-          command: apt-add-repository ppa:ansible/ansible && apt update
-      - run:
-          name: Install Ansible
-          command: apt-get install -y ansible
-      - run:
-          name: Install Ansible Galaxy roles
-          command: ansible-galaxy install -r requirements.yml
-      - run:
-          name: Run playbook
-          command: ansible-playbook -e user=foobar playbook.yml -c localhost
+      - setup_remote_docker:
+          version: 17.05.0-ce
+      - run: docker build -t workstation-playbook:latest -e "CI=$CI" .
