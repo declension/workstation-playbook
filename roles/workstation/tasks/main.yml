@@ -1,8 +1,4 @@
 ---
-- name: Run Ansible Galaxy
-  become: true
-  local_action: command ansible-galaxy install -r requirements.yml
-
 - name: User config
   file:
     path: "{{ config_dir }}"
@@ -13,30 +9,6 @@
     path: "{{ ansible_env.HOME + '/.local/bin' }} "
     state: directory
     recurse: true
-
-- name: Add ZSH config directories
-  file:
-    src: "{{ config_dir + '/.zshrc' }}"
-    dest: "{{ ansible_env.HOME + '/.zshrc' }}"
-    state: link
-    force: true
-
-- name: Remove ~/.conf/
-  file:
-    path: "{{ ansible_env.HOME + '/.conf/' }}"
-    state: absent
-
-- name: Configure Tmux
-  template:
-    src: templates/tmux.conf
-    dest: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
-
-- name: Link global Tmux config
-  file:
-    src: "{{ ansible_env.HOME + '/.config/tmux.conf' }}"
-    dest: "{{ tmux_conf_file }}"
-    state: link
-  when: tmux_conf_file is not exists
 
 - name: Add Yarn GPG key
   become: true
@@ -51,12 +23,6 @@
     state: present
     filename: yarn
 
-- name: Install Yarn
-  become: true
-  apt:
-    update_cache: true
-    name: yarn
-
 - name: Add Oracle Java repo
   become: true
   apt_repository:
@@ -68,20 +34,12 @@
   become: true
   shell: echo "oracle-java11-installer shared/accepted-oracle-license-v1-2 select true" | debconf-set-selections
 
-- name: Add Oracle Java 11
-  become: true
-  apt:
-    update_cache: true
-    name: oracle-java11-installer
-    state: present
-  when: jdk11_dir is not exists
-
-
-- name: Install useful packages
+- name: Install packages
   become: yes
   apt:
+    update_cache: true
     name:
-    - openjdk-11-jdk
+    - curl
     - python3-pip
     - python3-venv
     - pandoc
@@ -99,6 +57,13 @@
     - fonts-powerline
     - yamllint
 
+- name: Add Oracle Java 11
+  become: true
+  apt:
+    name: oracle-java11-installer
+    state: present
+  when: jdk11_dir is not exists
+
 # TODO: wait for Ansible 2.8 and snap command
 - name: Install Slack via Snap
   become: yes
@@ -108,11 +73,15 @@
 - name: Set up Python tooling
   command: python3 -m pip install --user --upgrade pip
 
-- name: Add Python Poetry
-  command: pip install --user poetry
+- name: Add Python Poetry & AWS CLI
+  command: python3 -m pip install --user poetry awscli
 
-- name: Install latest Haskell Stack
+- name: Install latest Haskell Stack (and GCC, cpp, libc, perl etc)
   shell: which stack || curl -sSL https://get.haskellstack.org/ | sh
+  when: stack is not exists
+
+- name: Install GHC etc
+  command: "{{ stack }} setup"
 
 - name: Download Node.JS 10 Repo script
   become: yes
@@ -131,9 +100,6 @@
   apt:
     name: nodejs
 
-- name: Install GHC etc
-  command: stack setup
-
 - name: Download Rust install script
   get_url:
     url: https://sh.rustup.rs
@@ -143,18 +109,6 @@
 
 - name: Install Rust
   script: /tmp/rustup.sh -y
-
-- name: Configure user for Zsh and Docker
-  become: yes
-  user:
-    name: "{{ user|quote }}"
-    generate_ssh_key: yes
-    shell: /usr/bin/zsh
-    append: yes
-    groups: adm, docker
-
-- name: Install AWS CLI tools
-  command: pip install --user awscli
 
 - name: Download Terraform
   get_url:
@@ -166,19 +120,3 @@
   unarchive:
     dest: /usr/local/bin
     src: /tmp/terraform.zip
-
-- name: Sort out window dragging
-  command: gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Alt>'
-
-- name: Reminders
-  command: echo "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
-
-- name: Increase file watchers
-  become: true
-  command: echo "fs.inotify.max_user_watches=524288" >>> /etc/sysctl.conf
-
-- name: Disable move to workspace left keys
-  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left '[]'
-
-- name: Disable move to workspace right keys
-  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right '[]'

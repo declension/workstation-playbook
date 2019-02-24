@@ -1,4 +1,13 @@
 ---
+- name: Configure user for Zsh and Docker
+  become: yes
+  user:
+    name: "{{ user|quote }}"
+    generate_ssh_key: yes
+    shell: /usr/bin/zsh
+    append: yes
+    groups: adm, docker
+
 - name: Configure Zsh
   template:
     src: templates/zshrc.in
@@ -28,3 +37,27 @@
     dest: "{{ tmux_conf_file }}"
     state: link
   when: tmux_conf_file is not exists
+
+- stat:
+    path: /usr/bin/gsettings
+  register: gsettings
+
+- name: Sort out window dragging
+  command: gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Alt>'
+  when: gsettings.stat.executable is defined and gsettings.stat.executable
+
+- name: Disable move to workspace left keys
+  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left '[]'
+  when: gsettings.stat.executable is defined and gsettings.stat.executable
+
+- name: Disable move to workspace right keys
+  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right '[]'
+  when: gsettings.stat.executable is defined and gsettings.stat.executable
+
+- name: Reminders
+  debug:
+    msg: "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
+
+- name: Increase file watchers
+  become: true
+  command: echo "fs.inotify.max_user_watches=524288" >>> /etc/sysctl.conf

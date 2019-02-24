@@ -1,6 +1,13 @@
 - hosts: localhost
+  name: Run local installs
   roles:
     - workstation
+
+- hosts: localhost
+  name: Run Ansible Galaxy
+  become: true
+  tasks:
+    - local_action: command ansible-galaxy install -r requirements.yml
 
 - hosts: localhost
   become: yes
