@@ -23,6 +23,16 @@
     state: present
     filename: yarn
 
+- name: Add Kubernetes Key
+  become: true
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+- name: Add Kubernetes repo
+  become: true
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+
 - name: Add Oracle Java repo
   become: true
   apt_repository:
@@ -56,6 +66,7 @@
     - gnome-tweaks
     - fonts-powerline
     - yamllint
+    - kubectl
 
 - name: Add Oracle Java 11
   become: true
