@@ -81,6 +81,11 @@
   command: snap install --classic slack
   when: lookup('env','CI') == ""
 
+- name: Install gcloud Snap
+  become: yes
+  command: snap install --classic google-cloud-sdk
+  when: lookup('env','CI') == ""
+
 - name: Set up Python tooling
   command: python3 -m pip install --user --upgrade pip
 
