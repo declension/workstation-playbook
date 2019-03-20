@@ -23,7 +23,7 @@ Note that this installs the Galaxy roles,
 but you can do this manually with:
 
 ```bash
-sudo ansible-galaxy install -r requirements.yml`
+sudo ansible-galaxy install -r requirements.yml
 ```
 
 Then: 
