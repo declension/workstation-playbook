@@ -67,6 +67,12 @@
     - fonts-powerline
     - yamllint
     - kubectl
+    - nmap
+    - openvpn 
+    - network-manager-openvpn-gnome
+    - mplayer
+    - gimp
+    - inkscape
 
 - name: Add Oracle Java 11
   become: true
@@ -84,6 +90,11 @@
 - name: Install gcloud Snap
   become: yes
   command: snap install --classic google-cloud-sdk
+  when: lookup('env','CI') == ""
+
+- name: Install helm
+  become: yes
+  command: snap install --classic helm
   when: lookup('env','CI') == ""
 
 - name: Set up Python tooling
