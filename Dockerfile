@@ -17,3 +17,5 @@ COPY roles roles
 
 RUN export CI="$CI"
 RUN ansible-playbook -e user=$user playbook.yml -c localhost
+
+RUN ls -l ~/.tmux/plugins

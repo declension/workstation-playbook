@@ -1,4 +1,8 @@
 user: nick
 ohmyzsh_theme: robbyrussell
-tmux_conf_file: "{{ ansible_env.HOME + '/.tmux.conf' }}"
+tmux_dir: "{{ ansible_env.HOME + '/.tmux' }}"
+tmux_plugin_dir: "{{ tmux_dir + '/plugins' }}"
+tmux_conf_file: "{{ ansible_env.HOME + '/tmux.conf' }}"
+tmux_plugins:
+  - { name: "tpm", repo: "https://github.com/tmux-plugins/tpm.git", version: "v3.0.0" }
 config_dir: "{{ ansible_env.HOME + '/' + '.config' }}"

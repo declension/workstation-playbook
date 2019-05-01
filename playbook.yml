@@ -15,10 +15,14 @@
     ohmyzsh_users: [ "{{ user }}" ]
   roles:
     - { role: nover.ohmyzsh, ohmyzsh_users: [ "{{ ohmyzsh_user }}" ] }
-    - Tahvok.vim
-    - { role: nephelaiio.tmux, ansible_user: "{{ user }}", tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
     - gantsign.bat
     - geerlingguy.docker
+
+- hosts: localhost
+  roles:
+    - Tahvok.vim
+    - { role: nephelaiio.tmux, ansible_user: "{{ user }}",
+        tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
 - hosts: localhost
   roles:

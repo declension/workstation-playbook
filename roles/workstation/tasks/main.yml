@@ -148,3 +148,19 @@
   unarchive:
     dest: /usr/local/bin
     src: /tmp/terraform.zip
+
+
+  # These don't seem to work from the Galaxy role (but definitely not a bug, I checked)
+- name: Create Tmux plugin directory
+  file:
+    dest: "{{ tmux_plugin_dir }}"
+    state: directory
+
+- name: Install Tmux plugins
+  git:
+    repo: "{{ item['repo'] }}"
+    dest: "{{ tmux_plugin_dir }}/{{ item['name'] }}"
+    version: "{{ item['version'] }}"
+    force: yes
+  with_items:
+    - "{{ tmux_plugins }}"
