@@ -64,6 +64,7 @@
     - ubuntu-restricted-extras
     - powerline
     - gnome-tweaks
+    - nautilus-image-converter
     - fonts-powerline
     - yamllint
     - kubectl
