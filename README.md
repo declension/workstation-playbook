@@ -4,8 +4,33 @@ Workstation Setup
 
 ### Assumptions
 
- * Ubuntu 17 / 18 (should work on other releases though)
+ * Ubuntu 17 / 18 / 19.04 (should work on other releases though)
  * You like the same tools as me...
+
+### Features
+Using local and various excellent Ansible Galaxy roles, you get:
+
+#### Tools, Shells, Editors
+ * Zsh & oh-my-zsh
+ * Vim & plugins
+ * Slack
+ * Nice Tmux (& plugins), plus config
+
+#### Various programming languages: 
+ * Python3 (+ Poetry)
+ * Oracle Java 11
+ * Node 10 
+ * Latest Haskell (GHC + Stack),
+ * Latest Rust
+
+#### DevOps / Systems Tooling
+ * Docker CE
+ * Terraform
+ * Kubernetes & Helm
+ * `nmap`, `htop`, `jq`, `httpie` etc 
+
+...and more (see playbook).
+
 
 Setup
 -----
