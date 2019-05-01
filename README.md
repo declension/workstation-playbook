@@ -29,5 +29,5 @@ ansible-galaxy install -r requirements.yml
 Then: 
 
 ```bash
-ansible-playbook -e "user=$USER" playbook.yml -c localhost -K
+ansible-playbook -e "user=$USER" playbook.yml -K
 ```
