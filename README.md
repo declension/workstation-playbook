@@ -58,7 +58,8 @@ Using local and various excellent Ansible Galaxy roles, you get:
 ### DevOps / Systems Tooling
  * Docker CE
  * Terraform
- * Kubernetes & Helm
+ * Virtualbox
+ * Kubernetes, Minikube & Helm
  * `nmap`, `htop`, `jq`, `httpie` etc 
 
 ...and more (see playbook).
