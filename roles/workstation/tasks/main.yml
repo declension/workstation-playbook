@@ -68,6 +68,7 @@
     - fonts-powerline
     - yamllint
     - kubectl
+    - virtualbox
     - nmap
     - openvpn 
     - network-manager-openvpn-gnome
@@ -87,6 +88,15 @@
   become: yes
   command: snap install --classic slack
   when: lookup('env','CI') == ""
+
+- name: Download MiniKube
+  get_url:
+    url: "https://storage.googleapis.com/minikube/releases/v{{minikube_version}}/minikube-linux-amd64"
+    dest: /tmp/minikube-linux-amd64
+
+- name: Install MiniKube
+  become: yes
+  command: install /tmp/minikube-linux-amd64 /usr/local/bin/minikube
 
 - name: Install gcloud Snap
   become: yes
@@ -164,3 +174,4 @@
     force: yes
   with_items:
     - "{{ tmux_plugins }}"
+
