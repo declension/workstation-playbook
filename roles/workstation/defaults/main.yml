@@ -1,4 +1,4 @@
-terraform_version: 0.11.11
+terraform_version: 0.11.14
 jdk11_dir: /usr/lib/jvm/java-11-oracle
 stack: /usr/local/bin/stack
 minikube_version: 1.0.1
