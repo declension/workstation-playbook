@@ -67,7 +67,6 @@
     - nautilus-image-converter
     - fonts-powerline
     - yamllint
-    - fzf
     - kubectl
     - virtualbox
     - nmap
