@@ -16,7 +16,7 @@
   roles:
     - { role: nover.ohmyzsh, ohmyzsh_users: [ "{{ ohmyzsh_user }}" ] }
     - gantsign.bat
-    - geerlingguy.docker
+    - { role: geerlingguy.docker, docker_apt_release_channel: "test" }
 
 - hosts: localhost
   roles:
