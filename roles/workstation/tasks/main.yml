@@ -58,6 +58,7 @@
     - tree
     - jq
     - httpie
+    - multitail
     - cowsay
     - lolcat
     - toilet
