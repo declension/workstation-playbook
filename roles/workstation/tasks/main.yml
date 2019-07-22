@@ -76,6 +76,7 @@
     - mplayer
     - gimp
     - inkscape
+    - pass
 
 - name: Add Oracle Java 11
   become: true
