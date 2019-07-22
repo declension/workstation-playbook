@@ -33,17 +33,6 @@
   apt_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
 
-- name: Add Oracle Java repo
-  become: true
-  apt_repository:
-    repo: "ppa:linuxuprising/java"
-    state: present
-    filename: linuxuprising
-
-- name: Accept Oracle License
-  become: true
-  shell: echo "oracle-java11-installer shared/accepted-oracle-license-v1-2 select true" | debconf-set-selections
-
 - name: Install packages
   become: yes
   apt:
@@ -52,6 +41,7 @@
     - curl
     - python3-pip
     - python3-venv
+    - openjdk-12-jdk
     - pandoc
     - htop
     - net-tools
@@ -77,13 +67,11 @@
     - gimp
     - inkscape
     - pass
+    - libbz2-dev
+    - llvm
+    - python-openssl
+    - libffi-dev
 
-- name: Add Oracle Java 11
-  become: true
-  apt:
-    name: oracle-java11-installer
-    state: present
-  when: jdk11_dir is not exists
 
 # TODO: wait for Ansible 2.8 and snap command
 - name: Install Slack via Snap
