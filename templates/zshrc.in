@@ -37,7 +37,7 @@ ZSH_TMUX_AUTOSTART=false
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-plugins=(git cp command-not-found git-extras gnu-utils history pip python tmux ssh-agent aws docker httpie node npm yarn terraform kubectl rsync stack)
+plugins=(git cp command-not-found git-extras gnu-utils history pip python tmux ssh-agent aws docker httpie node npm yarn terraform kubectl rsync stack kubectl)
 
 source $ZSH/oh-my-zsh.sh
 
