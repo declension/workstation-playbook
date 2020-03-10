@@ -41,7 +41,7 @@
     - curl
     - python3-pip
     - python3-venv
-    - openjdk-12-jdk
+    - openjdk-13-jdk
     - pandoc
     - htop
     - net-tools
