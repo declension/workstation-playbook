@@ -38,9 +38,8 @@
   apt:
     update_cache: true
     name:
+    - vim
     - curl
-    - python3-pip
-    - python3-venv
     - openjdk-13-jdk
     - pandoc
     - htop
@@ -69,7 +68,7 @@
     - pass
     - libbz2-dev
     - llvm
-    - python-openssl
+    - python3-openssl
     - libffi-dev
 
 
@@ -88,19 +87,6 @@
   become: yes
   command: install /tmp/minikube-linux-amd64 /usr/local/bin/minikube
 
-- name: Install gcloud Snap
-  become: yes
-  command: snap install --classic google-cloud-sdk
-  when: lookup('env','CI') == ""
-
-- name: Install helm
-  become: yes
-  command: snap install --classic helm
-  when: lookup('env','CI') == ""
-
-- name: Set up Python tooling
-  command: python3 -m pip install --user --upgrade pip
-
 - name: Add Python Poetry & AWS CLI
   command: python3 -m pip install --user poetry awscli
 
@@ -111,17 +97,17 @@
 - name: Install GHC etc
   command: "{{ stack }} setup"
 
-- name: Download Node.JS 10 Repo script
+- name: Download Node.JS Repo script
   become: yes
   get_url:
-     url: https://deb.nodesource.com/setup_10.x
-     dest: /tmp/set-up-node-10.sh
+     url: https://deb.nodesource.com/setup_14.x
+     dest: /tmp/set-up-node.sh
      force: yes
      mode: ug+rx
 
 - name: Set up Node repo
   become: true
-  script: /tmp/set-up-node-10.sh
+  script: /tmp/set-up-node.sh
 
 - name: Install Node JS
   become: true
@@ -143,12 +129,6 @@
     url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
     dest: /tmp/terraform.zip
     force: yes
-
-- name: Install Terraform
-  unarchive:
-    dest: /usr/local/bin
-    src: /tmp/terraform.zip
-
 
   # These don't seem to work from the Galaxy role (but definitely not a bug, I checked)
 - name: Create Tmux plugin directory
