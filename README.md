@@ -6,7 +6,7 @@ Workstation Setup
 Assumptions
 -----------
 
- * Ubuntu 17 / 18 / 19.04 (should work on other releases though)
+ * Ubuntu 20.10 (should mostly work on other releases though)
  * You like the same tools as me...
 
 
@@ -44,14 +44,16 @@ Using local and various excellent Ansible Galaxy roles, you get:
 
 ### Tools, Shells, Editors
  * Zsh & oh-my-zsh
+ * [Alacritty](https://github.com/alacritty/alacritty)
+ * [Starship](https://starship.rs/guide/)
  * Vim & plugins
  * Slack
  * Nice Tmux (& plugins), plus config
 
 ### Various programming languages: 
  * Python3 (+ Poetry)
- * Oracle Java 11
- * Node 10 
+ * Oracle Java 13
+ * Node 14
  * Latest Haskell (GHC + Stack),
  * Latest Rust
 
@@ -59,7 +61,7 @@ Using local and various excellent Ansible Galaxy roles, you get:
  * Docker CE
  * Terraform
  * Virtualbox
- * Kubernetes, Minikube & Helm
+ * Kubernetes, Minikube
  * `nmap`, `htop`, `jq`, `httpie` etc 
 
 ...and more (see playbook).

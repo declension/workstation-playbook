@@ -70,6 +70,13 @@
     - llvm
     - python3-openssl
     - libffi-dev
+    # Rust / Alacritty things
+    - cmake
+    - libssl-dev
+    - pkg-config
+    - libfreetype6-dev
+    - libfontconfig1-dev
+    - libxcb-xfixes0-dev
 
 
 # TODO: wait for Ansible 2.8 and snap command
@@ -114,6 +121,13 @@
   apt:
     name: nodejs
 
+- name: Install snap extras
+  become: true
+  snap:
+    classic: true
+    name:
+      - yq
+
 - name: Download Rust install script
   get_url:
     url: https://sh.rustup.rs
@@ -123,6 +137,14 @@
 
 - name: Install Rust
   script: /tmp/rustup.sh -y
+
+
+- name: Install Alacritty & Starship
+  shell: cargo install alacritty starship
+
+- name: Default to Alacritty
+  become: true
+  shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty /usr/local/bin/alacritty 1 
 
 - name: Download Terraform
   get_url:
