@@ -1,10 +1,8 @@
-FROM ubuntu:19.04
+FROM ubuntu:20.04
 ARG CI="true"
 ARG user="user"
 
 RUN useradd -d /home/$user $user && mkdir -p /home/$user/.config
-RUN apt-get update && apt-get install -q -y software-properties-common
-RUN apt-add-repository ppa:ansible/ansible && apt update
 RUN apt-get install -q -y ansible
 
 COPY requirements.yml ./
