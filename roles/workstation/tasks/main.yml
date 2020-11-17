@@ -6,7 +6,7 @@
 
 - name: Local bin
   file:
-    path: "{{ ansible_env.HOME + '/.local/bin' }} "
+    path: "{{ ansible_env.HOME + '/.local/bin' }}"
     state: directory
     recurse: true
 
@@ -44,6 +44,7 @@
   apt:
     update_cache: true
     name:
+    - python3-pip
     - vim
     - curl
     - openjdk-13-jdk
@@ -117,7 +118,7 @@
 - name: Download Node.JS Repo script
   become: yes
   get_url:
-     url: https://deb.nodesource.com/setup_14.x
+     url: https://deb.nodesource.com/setup_15.x
      dest: /tmp/set-up-node.sh
      force: yes
      mode: ug+rx
