@@ -10,6 +10,12 @@
     state: directory
     recurse: true
 
+- name: Install gpg
+  become: yes
+  apt:
+    update_cache: true
+    name: gpg
+
 - name: Add Yarn GPG key
   become: true
   apt_key:
@@ -82,9 +88,10 @@
 - name: Install Slack, Noson via Snap
   snap:
     classic: true
-    name: slack
-    name: noson
-    name: yq
+    name: 
+      - slack
+      - noson
+      - yq
   become: true
   when: lookup('env','CI') == ""
 
