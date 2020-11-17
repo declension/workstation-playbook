@@ -79,10 +79,13 @@
     - libxcb-xfixes0-dev
 
 
-# TODO: wait for Ansible 2.8 and snap command
-- name: Install Slack via Snap
-  become: yes
-  command: snap install --classic slack
+- name: Install Slack, Noson via Snap
+  snap:
+    classic: true
+    name: slack
+    name: noson
+    name: yq
+  become: true
   when: lookup('env','CI') == ""
 
 - name: Download MiniKube
@@ -120,13 +123,6 @@
   become: true
   apt:
     name: nodejs
-
-- name: Install snap extras
-  become: true
-  snap:
-    classic: true
-    name:
-      - yq
 
 - name: Download Rust install script
   get_url:
