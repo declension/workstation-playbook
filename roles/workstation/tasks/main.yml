@@ -39,6 +39,18 @@
   apt_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
 
+- name: Add Signal key
+  become: true
+  apt_key:
+    url: https://updates.signal.org/desktop/apt/keys.asc
+
+- name: Add Signal repo
+  become: true
+  apt_repository:
+    repo: deb https://updates.signal.org/desktop/apt xenial main
+    state: present
+    filename: signal 
+
 - name: Install packages
   become: yes
   apt:
@@ -63,8 +75,6 @@
     - gnome-tweaks
     - nautilus-image-converter
     - fonts-powerline
-    - yamllint
-    - kubectl
     - virtualbox
     - nmap
     - openvpn 
@@ -76,15 +86,20 @@
     - libbz2-dev
     - llvm
     - python3-openssl
+    - git-lfs
     - libffi-dev
     # Rust / Alacritty things
     - cmake
     - libssl-dev
+    - libcairo2-dev
     - pkg-config
     - libfreetype6-dev
     - libfontconfig1-dev
     - libxcb-xfixes0-dev
-
+    # Other packages
+    - yamllint
+    - kubectl
+    - signal-desktop
 
 - name: Install Slack, Noson via Snap
   snap:
@@ -156,7 +171,7 @@
     dest: /tmp/terraform.zip
     force: yes
 
-  # These don't seem to work from the Galaxy role (but definitely not a bug, I checked)
+# These don't seem to work from the Galaxy role (but definitely not a bug, I checked)
 - name: Create Tmux plugin directory
   file:
     dest: "{{ tmux_plugin_dir }}"
