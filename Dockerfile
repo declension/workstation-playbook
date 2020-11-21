@@ -4,10 +4,21 @@ ARG user="user"
 
 RUN useradd --create-home $user \
     && mkdir /home/$user/.config \
-    && chown -R user /home/$user
+    && chown -R user /home/$user \
+    && usermod -a -G sudo $user
 
 RUN apt-get update \
-    && apt-get install -q -y "ansible=2.9*"
+    && apt-get install -q -y \
+        "ansible=2.9*" \
+        "sudo" \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Need passwordless access
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# More realistic
+USER $user
 
 COPY requirements.yml ./
 RUN ansible-galaxy install -r requirements.yml
@@ -18,6 +29,5 @@ COPY templates templates
 COPY roles roles
 
 RUN export CI="$CI"
-RUN ansible-playbook -e user=$user playbook.yml -c localhost
 
-RUN ls -l ~/.tmux/plugins
+RUN ansible-playbook -e user=$user playbook.yml -c localhost
