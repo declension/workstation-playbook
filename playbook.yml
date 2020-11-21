@@ -9,11 +9,12 @@
     ohmyzsh_users:
       - "{{ user }}"
   roles:
+    - gantsign.bat
+    - Tahvok.vim
+
     - role: nover.ohmyzsh
       ohmyzsh_users:
         - "{{ ohmyzsh_user }}"
-
-    - gantsign.bat
 
     - role: geerlingguy.docker
       docker_apt_release_channel: "test"
@@ -26,11 +27,10 @@
         - alacritty
         - ripgrep
         - starship
-- hosts: localhost
-  roles:
-    - Tahvok.vim
-    - { role: nephelaiio.tmux, ansible_user: "{{ user }}",
-        tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
+
+    - role: nephelaiio.tmux
+      ansible_user: "{{ user }}"
+      tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf"
 
 # This needs to come last
 - hosts: localhost
