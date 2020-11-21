@@ -162,7 +162,7 @@
 
 - name: Default to Alacritty
   become: true
-  shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty /usr/local/bin/alacritty 1 
+  shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty "{{ ansible_env.HOME }}/.cargo/bin/alacritty" 1
 
 - name: Download Terraform
   get_url:
