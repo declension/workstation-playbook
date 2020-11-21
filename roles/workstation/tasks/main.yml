@@ -123,12 +123,25 @@
 - name: Add Python Poetry & AWS CLI
   command: python3 -m pip install --user poetry awscli
 
-- name: Install latest Haskell Stack (and GCC, cpp, libc, perl etc)
-  shell: which stack || curl -sSL https://get.haskellstack.org/ | sh
-  when: stack is not exists
+- name: Check for Stack
+  # We need this command not to *fail*, but `which` does...
+  shell: which stack >/dev/null && which stack || true
+  register: which_stack
 
-- name: Install GHC etc
-  command: "{{ stack }} setup"
+- name: Download Stack script
+  get_url:
+    url: https://get.haskellstack.org/
+    dest: /tmp/install-stack.sh
+    force: yes
+  when: which_stack.stdout|length < 1
+
+- name: Install Stack
+  script: /tmp/install-stack.sh
+  when: which_stack.stdout|length < 1
+
+- name: Install GHC with Stack
+  command: "{{which_stack.stdout}} setup"
+  when: which_stack.stdout|length > 1
 
 - name: Download Node.JS Repo script
   become: yes

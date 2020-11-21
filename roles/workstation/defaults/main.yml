@@ -1,3 +1,2 @@
 terraform_version: 0.13.5
-stack: ~/.local/bin/stack 
 minikube_version: 1.11.0
