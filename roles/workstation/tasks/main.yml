@@ -160,19 +160,11 @@
   apt:
     name: nodejs
 
-- name: Download Rust install script
-  get_url:
-    url: https://sh.rustup.rs
-    dest: /tmp/rustup.sh
-    force: yes
-    mode: ug+x
-
-- name: Install Rust
-  script: /tmp/rustup.sh -y
-
-
-- name: Install Alacritty & Starship
-  shell: cargo install alacritty starship
+- name: Install Cargo apps
+  cargo_items:
+  - ripgrep
+  - alacritty
+  - starship
 
 - name: Default to Alacritty
   become: true
