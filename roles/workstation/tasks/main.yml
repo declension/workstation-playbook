@@ -160,10 +160,6 @@
   apt:
     name: nodejs
 
-- name: Default to Alacritty
-  become: true
-  shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty "{{ ansible_env.HOME }}/.cargo/bin/alacritty" 1
-
 - name: Download Terraform
   get_url:
     url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"

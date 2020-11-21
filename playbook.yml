@@ -31,6 +31,7 @@
     - { role: nephelaiio.tmux, ansible_user: "{{ user }}",
         tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf" }
 
+# This needs to come last
 - hosts: localhost
   roles:
     - configure

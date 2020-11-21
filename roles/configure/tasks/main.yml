@@ -38,6 +38,10 @@
     state: link
   when: tmux_conf_file is not exists
 
+- name: Default to Alacritty
+  become: true
+  shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty "{{ ansible_env.HOME }}/.cargo/bin/alacritty" 1
+
 - stat:
     path: /usr/bin/gsettings
   register: gsettings
