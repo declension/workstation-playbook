@@ -54,10 +54,6 @@
   command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right '[]'
   when: gsettings.stat.executable is defined and gsettings.stat.executable
 
-- name: Reminders
-  debug:
-    msg: "Get Alacritty - https://github.com/jwilm/alacritty/releases/latest"
-
 - name: Increase file watchers
   become: true
   command: echo "fs.inotify.max_user_watches=524288" >>> /etc/sysctl.conf
