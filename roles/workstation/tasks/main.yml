@@ -56,70 +56,71 @@
   apt:
     update_cache: true
     name:
-    - python3-pip
-    - python3-openssl
-    - openjdk-13-jdk
-    - git-lfs
-    - vim
-    - curl
-    - httpie
-    - jq
-    - htop
-    - tree
-    - multitail
-    - powerline
-    - fonts-powerline
-    - pass
+      - python3-pip
+      - python3-openssl
+      - openjdk-13-jdk
+      - git-lfs
+      - vim
+      - curl
+      - httpie
+      - jq
+      - htop
+      - tree
+      - multitail
+      - powerline
+      - fonts-powerline
+      - pass
 
-    # Networking
-    - net-tools
-    - nmap
-    - openvpn
+      # Networking
+      - net-tools
+      - nmap
+      - openvpn
 
-    # Ubuntu / Gnome utils
-    - ubuntu-restricted-extras
-    - gnome-tweaks
-    - nautilus-image-converter
-    - network-manager-openvpn-gnome
+      # Ubuntu / Gnome utils
+      - ubuntu-restricted-extras
+      - gnome-tweaks
+      - nautilus-image-converter
+      - network-manager-openvpn-gnome
 
       # Jokes
-    - cowsay
-    - lolcat
-    - toilet
+      - cowsay
+      - lolcat
+      - toilet
 
-    # Compiling tools
-    - libbz2-dev
-    - llvm
-    - libffi-dev
-    - cmake
+      # Compiling tools
+      - libbz2-dev
+      - llvm
+      - libffi-dev
+      - cmake
 
       # Rust / Alacritty things
-    - libssl-dev
-    - libcairo2-dev
-    - pkg-config
-    - libfreetype6-dev
-    - libfontconfig1-dev
-    - libxcb-xfixes0-dev
+      - libssl-dev
+      - libcairo2-dev
+      - pkg-config
+      - libfreetype6-dev
+      - libfontconfig1-dev
+      - libxcb-xfixes0-dev
 
-    # I18n
-    - gettext
-    - potool
+      # I18n
+      - gettext
+      - potool
 
-    # Other packages
-    - yamllint
-    - kubectl
-    - signal-desktop
+      # Other packages
+      - yamllint
+      - kubectl
+      - signal-desktop
 
-    # Audio
-    - mplayer
-    - gstreamer1.0-plugins-bad
+      # Audio
+      - mplayer
+      - gstreamer1.0-plugins-bad
 
 - name: Install bigger apps
   become: yes
   apt:
-    - gimp
-    - pandoc
-    - virtualbox
+    name:
+      - gimp
+      - pandoc
+      - virtualbox
 
 - name: Install Slack, Noson via Snap
   snap:
@@ -166,10 +167,10 @@
 - name: Download Node.JS Repo script
   become: yes
   get_url:
-     url: https://deb.nodesource.com/setup_14.x
-     dest: /tmp/set-up-node.sh
-     force: yes
-     mode: ug+rx
+    url: https://deb.nodesource.com/setup_14.x
+    dest: /tmp/set-up-node.sh
+    force: yes
+    mode: ug+rx
 
 - name: Set up Node repo
   become: true
