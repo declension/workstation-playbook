@@ -10,5 +10,5 @@
   src: gantsign.bat
 - name: geerlingguy.docker
   src: geerlingguy.docker
-- name: fubarhouse.rust
-  src: fubarhouse.rust
+- name: hurricanehrndz.rustup
+  src: hurricanehrndz.rustup

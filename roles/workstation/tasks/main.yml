@@ -160,12 +160,6 @@
   apt:
     name: nodejs
 
-- name: Install Cargo apps
-  cargo_items:
-  - ripgrep
-  - alacritty
-  - starship
-
 - name: Default to Alacritty
   become: true
   shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty /usr/local/bin/alacritty 1 
