@@ -35,6 +35,9 @@ DISABLE_AUTO_UPDATE="false"
 # NJB: This is easier than hacking all terminal emulators. EDIT: no, it's annoying.
 ZSH_TMUX_AUTOSTART=false
 
+# AWS plugin conflicts with other Rust shell
+SHOW_AWS_PROMPT=false
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 plugins=(git cp command-not-found git-extras gnu-utils history pip python tmux ssh-agent aws docker httpie node npm yarn terraform kubectl rsync stack kubectl)
