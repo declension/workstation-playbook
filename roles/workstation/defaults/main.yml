@@ -1,2 +1,2 @@
-terraform_version: 0.13.5
-minikube_version: 1.11.0
+terraform_version: 1.0.0
+openjdk_version: 15

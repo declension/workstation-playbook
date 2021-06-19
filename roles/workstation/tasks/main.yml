@@ -58,7 +58,7 @@
     name:
       - python3-pip
       - python3-openssl
-      - openjdk-13-jdk
+      - "openjdk-{{ openjdk_version }}-jdk"
       - git-lfs
       - vim
       - curl
@@ -131,15 +131,6 @@
       - yq
   become: true
   when: lookup('env','CI') == ""
-
-- name: Download MiniKube
-  get_url:
-    url: "https://storage.googleapis.com/minikube/releases/v{{minikube_version}}/minikube-linux-amd64"
-    dest: /tmp/minikube-linux-amd64
-
-- name: Install MiniKube
-  become: yes
-  command: install /tmp/minikube-linux-amd64 /usr/local/bin/minikube
 
 - name: Add Python Poetry & AWS CLI
   command: python3 -m pip install --user poetry awscli
