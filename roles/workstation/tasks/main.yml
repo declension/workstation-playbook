@@ -4,14 +4,6 @@
     path: "{{ config_dir }}"
     state: directory
 
-- name: Make /usr/local/bin writeable
-  become: true
-  file:
-    path: /usr/local/bin
-    state: directory
-    mode: u+rwx
-    owner: "{{ user }}"
-
 - name: Local bin
   file:
     path: "{{ ansible_env.HOME + '/.local/bin' }}"
@@ -54,8 +46,10 @@
     force: yes
 
 - name: Convert Signal key
-  shell:
-    gpg --dearmor -o /tmp/signal-desktop-keyring.gpg /tmp/signal-key.asc && rm /tmp/signal-key.asc
+  shell: |
+    rm -f /tmp/signal-desktop-keyring.gpg
+    gpg --dearmor -o /tmp/signal-desktop-keyring.gpg /tmp/signal-key.asc
+    rm /tmp/signal-key.asc
 
 - name: Install Signal GPG key
   become: true
@@ -201,8 +195,7 @@
 - name: Install Terraform
   unarchive:
     src: "/tmp/terraform-{{terraform_version}}.zip"
-    dest: "/usr/local/bin/"
-
+    dest: "{{ ansible_env.HOME + '/.local/bin' }}"
 
 # These don't seem to work from the Galaxy role (but definitely not a bug, I checked)
 - name: Create Tmux plugin directory
