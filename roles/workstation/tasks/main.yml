@@ -39,17 +39,29 @@
   apt_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
 
-- name: Add Signal key
-  become: true
-  apt_key:
+- name: Get Signal key
+  get_url:
     url: https://updates.signal.org/desktop/apt/keys.asc
+    dest: /tmp/signal-key.asc
+    force: yes
+
+- name: Convert Signal key
+  shell:
+    gpg --dearmor -o /tmp/signal-desktop-keyring.gpg /tmp/signal-key.asc && rm /tmp/signal-key.asc
+
+- name: Install Signal GPG key
+  become: true
+  copy:
+    src: /tmp/signal-desktop-keyring.gpg
+    dest: /usr/share/keyrings/signal-desktop-keyring.gpg
+    force: true
 
 - name: Add Signal repo
   become: true
   apt_repository:
-    repo: deb https://updates.signal.org/desktop/apt xenial main
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main"
     state: present
-    filename: signal
+    filename: signal-xenial
 
 - name: Install packages
   become: yes
