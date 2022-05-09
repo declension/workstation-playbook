@@ -46,9 +46,10 @@ Using local and various excellent Ansible Galaxy roles, you get:
  * Zsh & oh-my-zsh
  * [Alacritty](https://github.com/alacritty/alacritty)
  * [Starship](https://starship.rs/guide/)
- * Vim & plugins
- * Slack
  * Nice Tmux (& plugins), plus config
+
+### Communications
+ * Slack, Signal
 
 ### Various programming languages: 
  * Python3 (+ Poetry)
