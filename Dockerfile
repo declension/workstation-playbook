@@ -1,4 +1,4 @@
-FROM ubuntu:20.10
+FROM ubuntu:21.10
 ARG CI="true"
 ARG user="user"
 
@@ -9,7 +9,7 @@ RUN useradd --create-home $user \
 
 RUN apt-get update \
     && apt-get install -q -y \
-        "ansible=2.9*" \
+        "ansible=2.10*" \
         "sudo" \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

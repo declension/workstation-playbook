@@ -6,9 +6,8 @@ Workstation Setup
 Assumptions
 -----------
 
- * Ubuntu 20.10 (should mostly work on other releases though)
+ * Ubuntu 21.10 (should mostly work on other releases though)
  * You like the same tools as me...
-
 
 Setup
 -----
@@ -36,7 +35,6 @@ ansible-playbook -e "user=$USER" playbook.yml -K
 ```
 
 
-
 Features
 --------
 
@@ -62,7 +60,7 @@ Using local and various excellent Ansible Galaxy roles, you get:
  * Docker CE
  * Terraform
  * Virtualbox
- * Kubernetes, Minikube
+ * Kubernetes
  * `nmap`, `htop`, `jq`, `httpie` etc 
 
 ...and more (see playbook).
