@@ -187,8 +187,14 @@
 - name: Download Terraform
   get_url:
     url: "https://releases.hashicorp.com/terraform/{{ terraform_version }}/terraform_{{ terraform_version }}_linux_amd64.zip"
-    dest: /tmp/terraform.zip
+    dest: "/tmp/terraform-{{terraform_version}}.zip"
     force: yes
+
+- name: Install Terraform
+  unarchive:
+    src: "/tmp/terraform-{{terraform_version}}.zip"
+    dest: "/usr/local/bin/"
+
 
 # These don't seem to work from the Galaxy role (but definitely not a bug, I checked)
 - name: Create Tmux plugin directory
