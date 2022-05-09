@@ -158,7 +158,7 @@
 - name: Download Node.JS Repo script
   become: yes
   get_url:
-    url: https://deb.nodesource.com/setup_14.x
+    url: "https://deb.nodesource.com/setup_{{node_version}}.x"
     dest: /tmp/set-up-node.sh
     force: yes
     mode: ug+rx

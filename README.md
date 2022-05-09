@@ -52,8 +52,8 @@ Using local and various excellent Ansible Galaxy roles, you get:
 
 ### Various programming languages: 
  * Python3 (+ Poetry)
- * Oracle Java 13
- * Node 14
+ * Latest OpenJDK
+ * Latest Node
  * Latest Haskell (GHC + Stack),
  * Latest Rust
 
