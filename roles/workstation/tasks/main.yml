@@ -141,7 +141,6 @@
     classic: true
     name:
       - slack
-      - noson
       - yq
   become: true
   when: lookup('env','CI') == ""
