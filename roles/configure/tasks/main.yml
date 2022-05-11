@@ -26,17 +26,15 @@
     path: "{{ ansible_env.HOME + '/.conf/' }}"
     state: absent
 
+- name: Create Tmux config dir
+  file:
+    path: "{{ tmux_conf_dir}}"
+    state: directory
+
 - name: Configure Tmux
   template:
     src: templates/tmux.conf
-    dest: "{{ config_dir + '/tmux.conf' }}"
-
-- name: Link global Tmux config
-  file:
-    src: "{{ config_dir + '/tmux.conf' }}"
-    dest: "{{ tmux_conf_file }}"
-    state: link
-  when: tmux_conf_file is not exists
+    dest: "{{ tmux_conf_path }}"
 
 - name: Default to Alacritty
   become: true

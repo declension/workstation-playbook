@@ -1,0 +1,2 @@
+tmux_conf_dir: "{{ config_dir + '/tmux' }}"
+tmux_conf_path: "{{ tmux_conf_dir + '/tmux.conf' }}"
