@@ -31,6 +31,9 @@
       ansible_user: "{{ user }}"
       tmux_conf_template: "{{ playbook_dir }}/templates/tmux.conf"
 
+    - role: ableton.nix
+      ansible_user: "{{ user }}"
+
 # This needs to come last
 - hosts: localhost
   roles:

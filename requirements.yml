@@ -10,3 +10,5 @@
   src: geerlingguy.docker
 - name: hurricanehrndz.rustup
   src: hurricanehrndz.rustup
+- name: ableton.nix
+  src: ableton.nix
