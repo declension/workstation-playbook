@@ -34,6 +34,11 @@ Then:
 ansible-playbook -e "user=$USER" playbook.yml -K
 ```
 
+### Just run the `configure` role
+
+```bash
+ansible-playbook -e "user=$USER" playbook.yml --tags configure
+```
 
 Features
 --------

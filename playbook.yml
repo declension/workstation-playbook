@@ -38,3 +38,4 @@
 - hosts: localhost
   roles:
     - configure
+  tags: configure
