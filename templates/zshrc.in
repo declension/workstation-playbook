@@ -55,5 +55,8 @@ export EDITOR=vim
 # Use cross-shell stuff
 . ~/.profile
 
+# It's annoying, IMO
+unsetopt autocd
+
 # Starship
 eval "$(starship init zsh)"
