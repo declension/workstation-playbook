@@ -48,12 +48,12 @@
   command: gsettings set org.gnome.desktop.wm.preferences mouse-button-modifier '<Alt>'
   when: gsettings.stat.executable is defined and gsettings.stat.executable
 
-- name: Disable move to workspace left keys
-  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left '[]'
+- name: Remap move to workspace left keys
+  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left '<Control><Super>Left'
   when: gsettings.stat.executable is defined and gsettings.stat.executable
 
-- name: Disable move to workspace right keys
-  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right '[]'
+- name: Remap move to workspace right keys
+  command: gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right '<Control><Super>Right'
   when: gsettings.stat.executable is defined and gsettings.stat.executable
 
 - name: Increase file watchers
