@@ -60,13 +60,3 @@
   become: true
   command: echo "fs.inotify.max_user_watches=524288" >>> /etc/sysctl.conf
 
-- name: Create Nix Config Dir
-  file:
-    path: "{{ config_dir + '/nix' }}"
-    state: directory
-
-- name: Install Nix Flakes
-  command: "nix-env -iA nixpkgs.nixFlakes"
-
-- name: Enable Nix Flakes
-  shell: "echo 'experimental-features = nix-command flakes' >>  \"{{ config_dir + '/nix/nix.conf' }}\""
