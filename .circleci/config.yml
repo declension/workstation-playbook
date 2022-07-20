@@ -23,3 +23,9 @@ jobs:
           name: Test on Manjaro in Docker
           command: docker build -t workstation-playbook:latest -f Dockerfile.manjaro .
           no_output_timeout: 20m
+
+workflows:
+  test:
+    jobs:
+      - build-ubuntu
+      - build-manjaro
