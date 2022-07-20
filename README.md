@@ -6,7 +6,9 @@ Workstation Setup
 Assumptions
 -----------
 
- * Ubuntu 21.10 (should mostly work on other releases though)
+ * Ubuntu 21.10 (should mostly work on other releases though, 
+   and Debian should only take a few tweaks)
+ * :new: ...or [Manjaro](https://manjaro.org/). Might work with Arch, too.
  * You like the same tools as me...
 
 Setup
@@ -14,9 +16,15 @@ Setup
 
 ### Install Latest Ansible
 
+#### Ubuntu
 ```bash
 sudo apt-add-repository -y ppa:ansible/ansible
 sudo apt install ansible
+```
+
+#### Arch / Manjaro
+```bash
+sudo pacman -S ansible
 ```
 
 ### Run playbook
@@ -30,9 +38,16 @@ ansible-galaxy install -r requirements.yml
 
 Then: 
 
+#### Ubuntu
 ```bash
-ansible-playbook -e "user=$USER" playbook.yml -K
+ansible-playbook -e "user=$USER" playbook.yml -K --skip-tags manjaro
 ```
+
+#### Manjaro
+```bash
+ansible-playbook -e "user=$USER" playbook.yml -K --skip-tags ubuntu
+```
+
 
 ### Just run the `configure` role
 
@@ -62,6 +77,7 @@ Using local and various excellent Ansible Galaxy roles, you get:
  * Latest Rust
 
 ### DevOps / Systems Tooling
+ * [Nix](https://nixos.wiki/wiki/Nix), plus [Nix Flakes](https://nixos.wiki/wiki/Flakes)
  * Docker CE
  * Terraform
  * Virtualbox
@@ -69,5 +85,3 @@ Using local and various excellent Ansible Galaxy roles, you get:
  * `nmap`, `htop`, `jq`, `httpie` etc 
 
 ...and more (see playbook).
-
-

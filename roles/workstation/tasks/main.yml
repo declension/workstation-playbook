@@ -1,4 +1,13 @@
 ---
+
+- name: Ubuntu-only tasks
+  include_tasks: ubuntu.yml
+  tags: ubuntu
+
+- name: Manjaro-only tasks
+  include_tasks: manjaro.yml
+  tags: manjaro
+
 - name: User config
   file:
     path: "{{ config_dir }}"
@@ -10,69 +19,12 @@
     state: directory
     recurse: true
 
-- name: Install gpg
-  become: yes
-  apt:
-    update_cache: true
-    name: gpg
-
-- name: Add Yarn GPG key
-  become: true
-  apt_key:
-    url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    state: present
-
-- name: Add Yarn repo
-  become: true
-  apt_repository:
-    repo: deb https://dl.yarnpkg.com/debian/ stable main
-    state: present
-    filename: yarn
-
-- name: Add Kubernetes Key
-  become: true
-  apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-
-- name: Add Kubernetes repo
-  become: true
-  apt_repository:
-    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
-
-- name: Get Signal key
-  get_url:
-    url: https://updates.signal.org/desktop/apt/keys.asc
-    dest: /tmp/signal-key.asc
-    force: yes
-
-- name: Convert Signal key
-  shell: |
-    rm -f /tmp/signal-desktop-keyring.gpg
-    gpg --dearmor -o /tmp/signal-desktop-keyring.gpg /tmp/signal-key.asc
-    rm /tmp/signal-key.asc
-
-- name: Install Signal GPG key
-  become: true
-  copy:
-    src: /tmp/signal-desktop-keyring.gpg
-    dest: /usr/share/keyrings/signal-desktop-keyring.gpg
-    force: true
-
-- name: Add Signal repo
-  become: true
-  apt_repository:
-    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main"
-    state: present
-    filename: signal-xenial
 
 - name: Install packages
   become: yes
-  apt:
-    update_cache: true
+  package:
+    state: latest
     name:
-      - python3-pip
-      - python3-openssl
-      - "openjdk-{{ openjdk_version }}-jdk"
       - git-lfs
       - vim
       - curl
@@ -82,7 +34,6 @@
       - tree
       - multitail
       - powerline
-      - fonts-powerline
       - pass
 
       # Networking
@@ -90,34 +41,13 @@
       - nmap
       - openvpn
 
-      # Ubuntu / Gnome utils
-      - ubuntu-restricted-extras
-      - gnome-tweaks
-      - nautilus-image-converter
-      - network-manager-openvpn-gnome
-
       # Jokes
       - cowsay
       - lolcat
-      - toilet
-
-      # Compiling tools
-      - libbz2-dev
-      - llvm
-      - libffi-dev
-      - cmake
-
-      # Rust / Alacritty things
-      - libssl-dev
-      - libcairo2-dev
-      - pkg-config
-      - libfreetype6-dev
-      - libfontconfig1-dev
-      - libxcb-xfixes0-dev
+      - figlet
 
       # I18n
       - gettext
-      - potool
 
       # Other packages
       - yamllint
@@ -126,27 +56,15 @@
 
       # Audio
       - mplayer
-      - gstreamer1.0-plugins-bad
 
 - name: Install bigger apps
   become: yes
-  apt:
+  package:
+    state: latest
     name:
       - gimp
       - pandoc
       - virtualbox
-
-- name: Install Slack, Noson via Snap
-  snap:
-    classic: true
-    name:
-      - slack
-      - yq
-  become: true
-  when: lookup('env','CI') == ""
-
-- name: Add Python Poetry & AWS CLI
-  command: python3 -m pip install --user poetry awscli
 
 - name: Check for Stack
   # We need this command not to *fail*, but `which` does...
@@ -161,29 +79,13 @@
   when: which_stack.stdout|length < 1
 
 - name: Install Stack
+  become: yes
   script: /tmp/install-stack.sh
   when: which_stack.stdout|length < 1
 
 - name: Install GHC with Stack
   command: "{{which_stack.stdout}} setup"
   when: which_stack.stdout|length > 1
-
-- name: Download Node.JS Repo script
-  become: yes
-  get_url:
-    url: "https://deb.nodesource.com/setup_{{node_version}}.x"
-    dest: /tmp/set-up-node.sh
-    force: yes
-    mode: ug+rx
-
-- name: Set up Node repo
-  become: true
-  script: /tmp/set-up-node.sh
-
-- name: Install Node JS
-  become: true
-  apt:
-    name: nodejs
 
 - name: Download Terraform
   get_url:

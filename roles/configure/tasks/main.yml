@@ -3,7 +3,7 @@
   become: yes
   user:
     name: "{{ user|quote }}"
-    generate_ssh_key: yes
+    generate_ssh_key: no
     shell: /usr/bin/zsh
     append: yes
     groups: adm, docker
@@ -39,6 +39,7 @@
 - name: Default to Alacritty
   become: true
   shell: update-alternatives --install /etc/alternatives/x-terminal-emulator alacritty "{{ ansible_env.HOME }}/.cargo/bin/alacritty" 1
+  tags: ubuntu
 
 - stat:
     path: /usr/bin/gsettings
