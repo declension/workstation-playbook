@@ -1,3 +1,4 @@
 terraform_version: 1.1.9
-openjdk_version: 18
-node_version: 16
+debian_openjdk_version: 18
+arch_openjdk_version: 17
+debian_node_version: 16

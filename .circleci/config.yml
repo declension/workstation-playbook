@@ -1,6 +1,7 @@
-version: 2
+version: 2.1
+
 jobs:
-  build:
+  build-ubuntu:
     docker:
       - image: docker:stable-git
     steps:
@@ -8,6 +9,24 @@ jobs:
       - setup_remote_docker:
           version: 20.10.12
       - run:
-          name: Build in Docker
+          name: Test on Ubuntu in Docker
           command: docker build -t workstation-playbook:latest .
           no_output_timeout: 20m
+
+  build-manjaro:
+    docker:
+      - image: docker:stable-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.12
+      - run:
+          name: Test on Manjaro in Docker
+          command: docker build -t workstation-playbook:latest -f Dockerfile.manjaro .
+          no_output_timeout: 20m
+
+workflows:
+  test:
+    jobs:
+      - build-ubuntu
+      - build-manjaro

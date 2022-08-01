@@ -1,21 +1,19 @@
-FROM ubuntu:21.10
+FROM manjarolinux/base:latest
 ARG CI="true"
 ARG user="user"
+
+RUN cat /etc/group
 
 RUN useradd --create-home $user \
     && mkdir /home/$user/.config \
     && chown -R user /home/$user \
-    && usermod -a -G sudo $user
+    && usermod -a -G adm $user
 
-RUN apt-get update \
-    && apt-get install -q -y \
-        "ansible=2.10*" \
-        "sudo" \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+
+RUN pacman -Sy --noconfirm ansible unzip
 
 # Need passwordless access
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN echo '%adm ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # More realistic
 USER $user
@@ -30,4 +28,4 @@ COPY roles roles
 
 RUN export CI="$CI"
 
-RUN ansible-playbook -e user=$user playbook.yml -c localhost --skip-tags manjaro
+RUN ansible-playbook -e user=$user playbook.yml -c localhost --skip-tags ubuntu

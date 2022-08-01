@@ -9,13 +9,15 @@
     ohmyzsh_users:
       - "{{ user }}"
   roles:
-    - gantsign.bat
+    - role: gantsign.bat
+      tags: ubuntu
 
     - role: nover.ohmyzsh
       ohmyzsh_users:
         - "{{ ohmyzsh_user }}"
 
     - role: geerlingguy.docker
+      tags: ubuntu
       docker_apt_release_channel: "test"
       docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ ansible_distribution | lower }} focal {{ docker_apt_release_channel }}"
 
